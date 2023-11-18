@@ -1,0 +1,16 @@
+<div class="body-container">
+  <form class="center">
+    <mat-form-field>
+      <mat-label>Rider Lookup</mat-label>
+      <input matInput #riderSearch id="rider-search"
+        (keyup.enter)="riderLookup(riderSearch.value)">
+    </mat-form-field>
+  </form>
+
+  <div class="result-container">
+     <mat-card *ngFor="let r of racerList" class="rider-result">
+    {{r.name}}
+  </mat-card>
+  </div>
+ 
+</div>

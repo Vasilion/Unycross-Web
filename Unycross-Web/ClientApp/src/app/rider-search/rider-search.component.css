@@ -1,0 +1,25 @@
+.body-container {
+    width: 100%;
+    text-align: center;
+}
+
+.result-container{
+    display: inline-block;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+
+.rider-result{
+    margin-bottom: 5px;
+    margin-top: 5px;
+    border-radius: 10px;
+    background-color: rgb(209, 248, 248);
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(0, 0, 0);
+    width: 300px;
+}
+
+.rider-result:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+}

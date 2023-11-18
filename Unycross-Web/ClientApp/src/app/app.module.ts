@@ -19,6 +19,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
+import { RiderSearchComponent } from './rider-search/rider-search.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {MatInputModule} from '@angular/material/input';
     CounterComponent,
     FetchDataComponent,
     LoginComponent,
+    RiderSearchComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -48,6 +50,7 @@ import {MatInputModule} from '@angular/material/input';
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path:'search-rider', component: RiderSearchComponent}
     ])
   ],
   providers: [],
