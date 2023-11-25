@@ -2,15 +2,25 @@
   <form class="center">
     <mat-form-field>
       <mat-label>Rider Lookup</mat-label>
-      <input matInput #riderSearch id="rider-search"
-        (keyup.enter)="riderLookup(riderSearch.value)">
+      <input
+        matInput
+        #riderSearch
+        id="rider-search"
+        (keyup.enter)="riderLookup(riderSearch.value)"
+      />
     </mat-form-field>
   </form>
 
-  <div class="result-container">
-     <mat-card *ngFor="let r of racerList" class="rider-result">
-    {{r.name}}
-  </mat-card>
+  <div>
+    <mat-progress-spinner *ngIf="isLoading"></mat-progress-spinner>
   </div>
- 
+  <div class="result-container list" *ngIf="!isLoading">
+    <ul>
+      <li *ngFor="let r of racerList">
+        <span (click)="buildRacerProfile(r.slug)">
+          {{ r.name }}
+        </span>
+      </li>
+    </ul>
+  </div>
 </div>

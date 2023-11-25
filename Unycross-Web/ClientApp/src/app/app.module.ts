@@ -1,7 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  FormControl,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
@@ -13,13 +18,16 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 
 import { MatSlideToggleModule } from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatCardModule} from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RiderSearchComponent } from './rider-search/rider-search.component';
+import { RiderProfileComponent } from './rider-profile/rider-profile.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +37,8 @@ import { RiderSearchComponent } from './rider-search/rider-search.component';
     CounterComponent,
     FetchDataComponent,
     LoginComponent,
-    RiderSearchComponent
+    RiderSearchComponent,
+    RiderProfileComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,22 +47,25 @@ import { RiderSearchComponent } from './rider-search/rider-search.component';
     FormsModule,
     MatSlideToggleModule,
     MatCardModule,
-    FormsModule, 
+    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
     MatInputModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
-      { path:'search-rider', component: RiderSearchComponent}
-    ])
+      { path: 'search-rider', component: RiderSearchComponent },
+      { path: 'riderProfile', component: RiderProfileComponent },
+    ]),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

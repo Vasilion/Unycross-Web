@@ -1,0 +1,103 @@
+<div *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!isLoading">
+  <div class="center">
+    <mat-card class="wider-card">
+      <p>
+        <mat-label>
+          <h1>{{ racerProfile.firstName }} {{ racerProfile.lastName }}</h1>
+        </mat-label>
+      </p>
+      <p>
+        <label>
+          <h2><b>AMA Member: </b>{{ racerProfile.amaNumber }}</h2>
+        </label>
+      </p>
+      <p>
+        <label>
+          <h2>
+            <b>Rank: </b
+            ><span class="mx-font" [ngClass]="rankCss">{{ riderRank }}</span>
+          </h2>
+          <p>
+            <mat-progress-bar [value]="experienceProgress"></mat-progress-bar>
+          </p>
+          <p>{{ experienceToLevelUp }}</p>
+        </label>
+      </p>
+    </mat-card>
+  </div>
+  <div class="center about">
+    <mat-card class="wider-card">
+      <div>
+        <h2>About</h2>
+        <mat-label
+          >{{ racerProfile.firstName }} {{ racerProfile.lastName }}</mat-label
+        >
+      </div>
+      <div>
+        <p><b>Rider Class:</b> {{ racerProfile.class }}</p>
+        <p><b>Total Podiums All-Time:</b> {{ racerTotalPodiums }}</p>
+        <p><b>Total Races All-Time:</b> {{ racerTotalRaces }}</p>
+        <p>
+          <b>Podium Average:</b>
+          {{ ((racerTotalPodiums / racerTotalRaces) * 100).toFixed() }}%
+        </p>
+        <p>
+          <b>Rider Birthdate:</b>
+          {{ racerProfile.birthdate | date : "longDate" }}
+        </p>
+        <p>
+          <b>Home Town:</b> {{ racerProfile.city }},
+          {{ racerProfile.state.toUpperCase() }}
+        </p>
+      </div>
+    </mat-card>
+  </div>
+  <div class="center race-list">
+    <mat-card class="wider-card">
+      <div>
+        <h2>Race History</h2>
+        <mat-label
+          >{{ racerProfile.firstName }} {{ racerProfile.lastName }}</mat-label
+        >
+      </div>
+      <div>
+        <div>
+          <div
+            *ngFor="let r of racerResults; let last = last"
+            lines="full"
+            class="race-list-data"
+          >
+            <label>
+              <h2>
+                <b>{{ r.eventName }} {{ r.year }}</b>
+              </h2>
+              <p [hidden]="r.trackName == 'Unknown AMA Venue'">
+                <b>Venue:</b> {{ r.trackName }}
+              </p>
+              <p><b>City:</b> {{ r.city }}, {{ r.state }}</p>
+              <p><b>District:</b> {{ r.district }}</p>
+              <p><b>Class:</b> {{ r.class }}</p>
+              <p><b>Date:</b> {{ r.dateString | date : "longDate" }}</p>
+              <p><b>Overall:</b> {{ r.overallResult }}</p>
+              <p>
+                <button
+                  mat-button
+                  color="primary"
+                  id="{{ modalID }}"
+                  expand="block"
+                  (click)="getRaceDetails(r.classSlug)"
+                >
+                  View Results
+                </button>
+              </p>
+            </label>
+            <mat-divider *ngIf="!last"></mat-divider>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
