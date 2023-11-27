@@ -19,6 +19,10 @@
       <li *ngFor="let r of racerList">
         <span (click)="buildRacerProfile(r.slug)">
           {{ r.name }}
+          <br />
+          {{ r.city }}
+          <br />
+          {{ r.state }}
         </span>
       </li>
     </ul>

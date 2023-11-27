@@ -28,6 +28,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RiderSearchComponent } from './rider-search/rider-search.component';
 import { RiderProfileComponent } from './rider-profile/rider-profile.component';
+import { TrackFinderComponent } from './track-finder/track-finder.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { RiderProfileComponent } from './rider-profile/rider-profile.component';
     LoginComponent,
     RiderSearchComponent,
     RiderProfileComponent,
+    TrackFinderComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -62,7 +64,8 @@ import { RiderProfileComponent } from './rider-profile/rider-profile.component';
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'search-rider', component: RiderSearchComponent },
-      { path: 'riderProfile', component: RiderProfileComponent },
+      { path: 'rider-profile', component: RiderProfileComponent },
+      { path: 'track-finder', component: TrackFinderComponent },
     ]),
   ],
   providers: [],

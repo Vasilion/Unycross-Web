@@ -4,8 +4,41 @@
 
 .race-list{
     margin-top: 10px;
+    float: right;
+}
+
+.rider-profile{
+    display: inline-grid;
+}
+
+.rider-info{
+    float: right;
+    max-width: 65%;
+}
+
+.rider-card{
+    float: left;
+    margin: 5px;
+    width: 400px;
+    height: 160px;
 }
 
 .race-list-data{
     margin-top: 10px;
+}
+
+.rider-image{
+    float: left;
+    margin: 5px;
+    width: 160px;
+    height: 160px;
+    border-radius: 10px;
+    border: solid 3px #fff;
+    box-shadow: 0 0 3px 2px #ccc;
+    background-color: #ccc;
+}
+
+.container{
+    width: 100%;
+    display: block;
 }

@@ -71,7 +71,7 @@ export class RiderSearchComponent implements OnInit {
       };
       this.racerProfile = racerProfileResponse;
       this.riderService.localProfile = this.racerProfile;
-      this.router.navigateByUrl('/riderProfile');
+      this.router.navigateByUrl('/rider-profile');
     });
   }
 }
