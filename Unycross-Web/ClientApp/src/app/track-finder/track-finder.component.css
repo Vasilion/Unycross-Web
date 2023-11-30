@@ -1,4 +1,18 @@
+.map-container{
+    width:80vw;
+    height: 80vh;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 5px;
+}
+
 .full{
-    width:100vw;
+    width: 100vw;
     height: 100vh;
+    text-align: center;
+}
+
+.search{
+    margin-left: 10px;
+    display: inline-block
 }
