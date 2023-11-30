@@ -11,8 +11,10 @@ import { RiderService } from '../services/rider.service';
 })
 export class TrackFinderComponent implements OnInit {
   zipCodeField: FormControl = new FormControl(null, []);
+  userRadius: FormControl = new FormControl(null, []);
   tracksJson: any[];
   trackWeather: TrackWeather;
+  defaultRadius: number = 50;
   raidusMarkers: Marker[] = [];
   radiusCircle: google.maps.Circle;
   radius: number = 80; //killometers 1 mile/ 1.6 km
@@ -207,11 +209,22 @@ export class TrackFinderComponent implements OnInit {
     });
   }
 
+  setMapZoom(radius: number): void {
+    if (radius <= 50 * 1.6) {
+      this.map.setZoom(5);
+    }
+    if (radius > 50 * 1.6 || radius <= 100 * 1.6) {
+      this.map.setZoom(8);
+    } else {
+      this.map.setZoom(11);
+    }
+  }
+
   async searchByRadiusOfZipCode() {
     await this.setZipCoords();
     let markers: Marker[] = this.findMarkersInRadius(
       this.zipCodeField.value,
-      this.radius,
+      Number(this.userRadius.value) * 1.6,
       this.raidusMarkers
     );
 
@@ -220,11 +233,12 @@ export class TrackFinderComponent implements OnInit {
       this.radiusCircle.setMap(null);
     }
 
-    this.drawRadius(this.map, markers[0], this.radius);
+    //THIS NEEDS IMPROVEMENT, NEED TO FIND CENTER OF RADIUS NOT PASS IN MARKER FROM RESULTS, CURRENTLY, IT IS CENTERING OFF A RANDOM MARKER IN THE RESULT SET FROM FIND MARKERS IN RADIUS. ZOOM SETTINGS COULD ALSO USE WORK
+    this.drawRadius(this.map, markers[0], Number(this.userRadius.value) * 1.6);
     this.map.setCenter({
       lat: Number(markers[0].lat),
       lng: Number(markers[0].lng),
     });
-    this.map.setZoom(10);
+    this.setMapZoom(Number(this.userRadius.value) * 1.6);
   }
 }

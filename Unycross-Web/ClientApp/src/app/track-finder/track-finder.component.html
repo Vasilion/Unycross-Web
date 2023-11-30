@@ -1,25 +1,40 @@
 <div class="full">
-  <div>
-    <div>
-      <mat-form-field class="search">
-        <mat-label>Zipcode</mat-label>
-        <input
-          matInput
-          [formControl]="zipCodeField"
-          (keyup.enter)="searchByRadiusOfZipCode()"
-        />
-      </mat-form-field>
-    </div>
-    <div>
-      <button
-        mat-raised-button
-        color="primary"
-        class="search"
-        (click)="searchByRadiusOfZipCode()"
-      >
-        Find Tracks
-      </button>
-    </div>
+  <div class="map-form-container">
+    <mat-card class="map-form-card">
+      <div>
+        <mat-form-field class="search">
+          <mat-label>Zipcode</mat-label>
+          <input
+            matInput
+            [formControl]="zipCodeField"
+            (keyup.enter)="searchByRadiusOfZipCode()"
+          />
+        </mat-form-field>
+        <div>
+          <mat-slider
+            [min]="1"
+            [max]="200"
+            [step]="1"
+            [ngModel]="defaultRadius"
+            [formControl]="userRadius"
+            ><input matSliderThumb
+          /></mat-slider>
+          <mat-label class="radius-label"
+            >{{ userRadius.value }} miles</mat-label
+          >
+        </div>
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          color="primary"
+          class="search-btn"
+          (click)="searchByRadiusOfZipCode()"
+        >
+          Find Tracks
+        </button>
+      </div></mat-card
+    >
   </div>
   <div class="map-container" id="map"></div>
 </div>

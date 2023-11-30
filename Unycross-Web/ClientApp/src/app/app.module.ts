@@ -26,6 +26,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSliderModule } from '@angular/material/slider';
 import { RiderSearchComponent } from './rider-search/rider-search.component';
 import { RiderProfileComponent } from './rider-profile/rider-profile.component';
 import { TrackFinderComponent } from './track-finder/track-finder.component';
@@ -58,6 +59,7 @@ import { TrackFinderComponent } from './track-finder/track-finder.component';
     MatInputModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
+    MatSliderModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
