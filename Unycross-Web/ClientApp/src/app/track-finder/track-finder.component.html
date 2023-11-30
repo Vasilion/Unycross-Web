@@ -3,7 +3,11 @@
     <div>
       <mat-form-field class="search">
         <mat-label>Zipcode</mat-label>
-        <input matInput [formControl]="zipCodeField" />
+        <input
+          matInput
+          [formControl]="zipCodeField"
+          (keyup.enter)="searchByRadiusOfZipCode()"
+        />
       </mat-form-field>
     </div>
     <div>
