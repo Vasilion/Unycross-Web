@@ -229,6 +229,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-
-./.vs/Unycross-Web/v17   
+*/.vs/*  
 ClientApp/.angular/cache
