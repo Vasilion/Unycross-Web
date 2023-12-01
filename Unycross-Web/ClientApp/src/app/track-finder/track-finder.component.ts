@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Loader } from '@googlemaps/js-api-loader';
+import { Track } from '../api';
 import { Marker, TrackWeather } from '../interfaces/rider';
-import { Track } from '../interfaces/tracks';
 import { RiderService } from '../services/rider.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { RiderService } from '../services/rider.service';
 export class TrackFinderComponent implements OnInit {
   zipCodeField: FormControl = new FormControl(null, []);
   userRadius: FormControl = new FormControl(null, []);
-  tracks: any[] = [];
+  tracks: Track[] = [];
   trackWeather: TrackWeather;
   defaultRadius: number = 50;
   raidusMarkers: Marker[] = [];
@@ -24,22 +24,22 @@ export class TrackFinderComponent implements OnInit {
   constructor(private riderService: RiderService) {}
 
   ngOnInit(): void {
-    this.riderService.getTracks().subscribe((tracks: any[]) => {
+    this.riderService.getTracks().subscribe((tracks: Track[]) => {
       console.log(tracks);
       tracks.forEach((track) => {
         let newTrack: Track = {
           id: track.id,
           name: track.name,
-          desc: track.description,
-          lat: track.latitude,
-          lon: track.longitude,
+          description: track.description,
+          latitude: track.latitude,
+          longitude: track.longitude,
           slug: track.slug,
           status: track.status,
         };
         this.tracks.push(newTrack);
       });
+      this.initGoogleMap(37.0902, -95.7129, 5);
     });
-    this.initGoogleMap(37.0902, -95.7129, 5);
   }
 
   async setZipCoords() {
@@ -73,11 +73,11 @@ export class TrackFinderComponent implements OnInit {
         map.setOptions({ scrollwheel: true });
       });
 
-      this.tracks.forEach((track: any) => {
+      this.tracks.forEach((track: Track) => {
         contentString = '<h1>' + track.name + '</h1>';
-        lat = Number(track.lat);
-        long = Number(track.lon);
-        this.raidusMarkers.push({ lat: track.lat, lng: track.lon });
+        lat = Number(track.latitude);
+        long = Number(track.longitude);
+        this.raidusMarkers.push({ lat: lat, lng: long });
 
         const marker = new google.maps.Marker({
           map: map,
@@ -99,7 +99,7 @@ export class TrackFinderComponent implements OnInit {
             ariaLabel: 'test',
           });
           this.riderService
-            .getTrackWeather(Number(track.lat), Number(track.lon))
+            .getTrackWeather(Number(track.latitude), Number(track.longitude))
             .subscribe((weather) => {
               this.trackWeather = {
                 city: weather.location.name,

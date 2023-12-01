@@ -15,9 +15,9 @@ namespace Unycross_Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllRiders()
+        public IEnumerable<Models.Rider> GetAllRiders()
         {
-            return Ok(_unycrossContext.Riders?.OrderBy(p => p.Id));
+            return _unycrossContext.Riders?.OrderBy(p => p.Id);
         }
     }
 }

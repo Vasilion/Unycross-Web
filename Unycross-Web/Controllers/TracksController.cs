@@ -14,9 +14,9 @@ namespace Unycross_Web.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllTracks()
+        public IEnumerable<Models.Track> GetAllTracks()
         {
-            return Ok(_unycrossContext.Tracks?.OrderBy(t => t.Id));
+            return _unycrossContext.Tracks?.OrderBy(t => t.Id);
         }
     }
 }

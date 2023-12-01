@@ -3,7 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unycross-Web", "Unycross-Web\Unycross-Web.csproj", "{7365C024-9C57-4F73-8CE0-A87F283B6FC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unycross-Web", "Unycross-Web\Unycross-Web.csproj", "{7365C024-9C57-4F73-8CE0-A87F283B6FC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B72C3096-BDB0-4CB9-B7EC-45AADC7A97E9}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
