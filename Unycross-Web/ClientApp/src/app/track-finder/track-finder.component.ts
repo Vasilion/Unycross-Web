@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Loader } from '@googlemaps/js-api-loader';
 import { Marker, TrackWeather } from '../interfaces/rider';
+import { Track } from '../interfaces/tracks';
 import { RiderService } from '../services/rider.service';
 
 @Component({
@@ -12,7 +13,7 @@ import { RiderService } from '../services/rider.service';
 export class TrackFinderComponent implements OnInit {
   zipCodeField: FormControl = new FormControl(null, []);
   userRadius: FormControl = new FormControl(null, []);
-  tracksJson: any[];
+  tracks: any[] = [];
   trackWeather: TrackWeather;
   defaultRadius: number = 50;
   raidusMarkers: Marker[] = [];
@@ -23,7 +24,21 @@ export class TrackFinderComponent implements OnInit {
   constructor(private riderService: RiderService) {}
 
   ngOnInit(): void {
-    this.tracksJson = require('../utilities/tracks.json');
+    this.riderService.getTracks().subscribe((tracks: any[]) => {
+      console.log(tracks);
+      tracks.forEach((track) => {
+        let newTrack: Track = {
+          id: track.id,
+          name: track.name,
+          desc: track.description,
+          lat: track.latitude,
+          lon: track.longitude,
+          slug: track.slug,
+          status: track.status,
+        };
+        this.tracks.push(newTrack);
+      });
+    });
     this.initGoogleMap(37.0902, -95.7129, 5);
   }
 
@@ -58,7 +73,7 @@ export class TrackFinderComponent implements OnInit {
         map.setOptions({ scrollwheel: true });
       });
 
-      this.tracksJson.forEach((track: any) => {
+      this.tracks.forEach((track: any) => {
         contentString = '<h1>' + track.name + '</h1>';
         lat = Number(track.lat);
         long = Number(track.lon);

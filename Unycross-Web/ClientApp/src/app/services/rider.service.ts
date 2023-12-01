@@ -45,6 +45,11 @@ export class RiderService {
     return this.http.get(url);
   }
 
+  public getTracks(): Observable<any> {
+    let url = 'https://localhost:7224/api/Tracks';
+    return this.http.get(url);
+  }
+
   // returns results of a specifc class on a specific event/race
   public getClassDetailsByEvent(classSlug: string): Observable<any> {
     let url =
