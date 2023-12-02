@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Unycross_Web.Models;
 using Unycross_Web.Context;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,12 @@ if (app.Environment.IsDevelopment())
         //unycrossContext.Database.EnsureCreated();
         unycrossContext.Database.Migrate();  //THIS RUNS PENDING MIGRATIONS
     }
-    app.UseSwagger();
+    app.UseSwagger(c => {
+        c.PreSerializeFilters.Add((swagger, httpReq) =>
+        {
+            swagger.Servers = new List<OpenApiServer> { new OpenApiServer { Url = $"https://{httpReq.Host.Host}:7224" } };
+        });
+    });
     app.UseSwaggerUI(options =>
 {
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");

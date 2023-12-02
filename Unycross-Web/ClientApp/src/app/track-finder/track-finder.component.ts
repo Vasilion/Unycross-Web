@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Loader } from '@googlemaps/js-api-loader';
-import { Track } from '../api';
+import { Track, TracksCodegenService } from '../api';
 import { Marker, TrackWeather } from '../interfaces/rider';
 import { RiderService } from '../services/rider.service';
 
@@ -21,11 +21,14 @@ export class TrackFinderComponent implements OnInit {
   radius: number = 80; //killometers 1 mile/ 1.6 km
   zipCoords: Marker | null;
   map: google.maps.Map;
-  constructor(private riderService: RiderService) {}
+  constructor(
+    private riderService: RiderService,
+    private TrackCodegenService: TracksCodegenService
+  ) {}
 
   ngOnInit(): void {
-    this.riderService.getTracks().subscribe((tracks: Track[]) => {
-      console.log(tracks);
+    this.TrackCodegenService.apiTracksGet().subscribe((tracks: Track[]) => {
+      // console.log(tracks);
       tracks.forEach((track) => {
         let newTrack: Track = {
           id: track.id,

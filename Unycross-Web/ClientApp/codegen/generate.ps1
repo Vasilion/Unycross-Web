@@ -2,7 +2,7 @@ write-host "Fetching swagger.json from API"
 Invoke-WebRequest https://localhost:7224/swagger/v1/swagger.json -OutFile ./swagger.json
 
 write-host "Generating Angular code using OpenAPI" 
-openapi-generator-cli generate -g typescript-angular -i ./swagger.json -o generated -c ./config.yaml --type-mappings=DateTime=Date --additional-properties=ngVersion=13.0.0 --additional-properties=serviceSuffix='CodegenService'
+openapi-generator-cli generate -g typescript-angular -i ./swagger.json -o generated -c ./config.yaml --type-mappings=DateTime=Date --additional-properties=ngVersion=14.0.3 --additional-properties=serviceSuffix='CodegenService'
 
 write-host "Removing existing services and models" 
 $ServiceDirectory = "../src/app/api/"
