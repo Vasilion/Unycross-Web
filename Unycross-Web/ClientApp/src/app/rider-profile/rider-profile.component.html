@@ -41,14 +41,11 @@
     </div>
   </div>
   <div *ngIf="!isLoading" class="rider-info">
-    <div class="center race-list">
+    <div class="race-list">
+      <div>
+        <h1>Race History</h1>
+      </div>
       <mat-card class="wider-card">
-        <div>
-          <h2>Race History</h2>
-          <mat-label
-            >{{ racerProfile.firstName }} {{ racerProfile.lastName }}</mat-label
-          >
-        </div>
         <div>
           <div>
             <div
@@ -70,7 +67,7 @@
                 <p><b>Overall:</b> {{ r.overallResult }}</p>
                 <p>
                   <button
-                    mat-button
+                    mat-raised-button
                     color="primary"
                     id="{{ modalID }}"
                     expand="block"

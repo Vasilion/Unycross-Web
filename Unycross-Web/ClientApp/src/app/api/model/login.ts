@@ -11,10 +11,8 @@
  */
 
 
-export interface WeatherForecast { 
-    date?: Date;
-    temperatureC?: number;
-    readonly temperatureF?: number;
-    summary?: string | null;
+export interface Login { 
+    userName?: string | null;
+    password?: string | null;
 }
 

@@ -13,8 +13,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginComponent } from './login/login.component';
 
 import { MatSlideToggleModule } from '@angular/material';
@@ -30,14 +28,18 @@ import { MatSliderModule } from '@angular/material/slider';
 import { RiderSearchComponent } from './rider-search/rider-search.component';
 import { RiderProfileComponent } from './rider-profile/rider-profile.component';
 import { TrackFinderComponent } from './track-finder/track-finder.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuard } from './guards/auth.guard';
+
+export function tokenGetter() {
+  return localStorage.getItem('jwt');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent,
     LoginComponent,
     RiderSearchComponent,
     RiderProfileComponent,
@@ -60,17 +62,34 @@ import { TrackFinderComponent } from './track-finder/track-finder.component';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSliderModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:7224'],
+        disallowedRoutes: [],
+      },
+    }),
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'search-rider', component: RiderSearchComponent },
-      { path: 'rider-profile', component: RiderProfileComponent },
-      { path: 'track-finder', component: TrackFinderComponent },
+      { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+      {
+        path: 'search-rider',
+        component: RiderSearchComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'rider-profile',
+        component: RiderProfileComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'track-finder',
+        component: TrackFinderComponent,
+        canActivate: [AuthGuard],
+      },
     ]),
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

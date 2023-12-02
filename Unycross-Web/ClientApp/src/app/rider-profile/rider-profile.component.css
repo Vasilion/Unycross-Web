@@ -23,6 +23,11 @@
     height: 160px;
 }
 
+.race-list{
+    width: 30vw;
+    text-align: center;
+}
+
 .race-list-data{
     margin-top: 10px;
 }

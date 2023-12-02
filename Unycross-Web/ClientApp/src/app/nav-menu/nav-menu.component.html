@@ -16,6 +16,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div
+        *ngIf="isUserAuthenticated()"
         class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
         [ngClass]="{ show: isExpanded }"
       >
@@ -28,16 +29,6 @@
             <a class="nav-link text-dark" [routerLink]="['/home']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
-            >
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link text-dark" [routerLink]="['/search-rider']"
               >Rider Lookup</a
             >
@@ -47,6 +38,14 @@
               >Track Finder</a
             >
           </li>
+          <button
+            mat-raised-button
+            class="nav-item"
+            [routerLinkActive]="['link-active']"
+            (click)="logOut()"
+          >
+            Logout
+          </button>
         </ul>
       </div>
     </div>

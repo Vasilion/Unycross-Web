@@ -1,15 +1,50 @@
 using Microsoft.EntityFrameworkCore;
-using Unycross_Web.Models;
 using Unycross_Web.Context;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+//cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("EnableCORS", builder =>
+    {
+        builder.AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+//auth
+builder.Services.AddAuthentication(opt => {
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "https://localhost:7224",
+            ValidAudience = "https://localhost:7224",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"))
+        };
+    });
 builder.Services.AddControllersWithViews();
+
+//db
 builder.Services.AddDbContext<UnycrossContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("UnycrossDb")));
+
+//swagger code gen
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -43,8 +78,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("EnableCORS");
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 
 app.MapControllerRoute(
