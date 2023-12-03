@@ -11,6 +11,7 @@ namespace Unycross_Web.Context
 
         public DbSet<Rider>? Riders { get; set; }
         public DbSet<Track>? Tracks { get; set; }
+        public DbSet<User>? Users { get; set; }
     }
 }
 

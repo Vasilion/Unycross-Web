@@ -6,20 +6,19 @@ namespace Unycross_Web.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RidersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UnycrossContext _unycrossContext;
 
-        public RidersController(UnycrossContext unycrossContext)
+        public UsersController(UnycrossContext unycrossContext)
         {
             _unycrossContext = unycrossContext;
         }
 
         [HttpGet, Authorize(Roles = "UnyUser")]
-        public IEnumerable<Models.Rider> GetAllRiders()
+        public Models.User GetUserByStoredAmaNumber(string userName, string password)
         {
-            return _unycrossContext.Riders?.OrderBy(p => p.Id);
+            return _unycrossContext.Users?.FirstOrDefault(u => u.UserName == userName && u.Password == password);
         }
-
     }
 }

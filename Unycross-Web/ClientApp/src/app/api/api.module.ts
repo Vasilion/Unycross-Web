@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthCodegenService } from './api/auth.service';
 import { RidersCodegenService } from './api/riders.service';
 import { TracksCodegenService } from './api/tracks.service';
+import { UsersCodegenService } from './api/users.service';
 
 @NgModule({
   imports:      [],

@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Unycross_Web.Context;
 using Unycross_Web.Models;
 
 namespace Unycross_Web.Controllers
@@ -11,6 +12,12 @@ namespace Unycross_Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly UnycrossContext _unycrossContext;
+
+        public AuthController(UnycrossContext unycrossContext)
+        {
+            _unycrossContext = unycrossContext;
+        }
         [HttpPost("login")]
         public IActionResult Login([FromBody] Login user)
         {
@@ -19,8 +26,16 @@ namespace Unycross_Web.Controllers
                 return BadRequest("Invalid client request");
             }
 
-            if (user.UserName == "luke" && user.Password == "test")
+            User storedUser = _unycrossContext?.Users?.FirstOrDefault(su => su.UserName == user.UserName && su.Password == user.Password);
+
+            if (storedUser == null)
             {
+                throw new NullReferenceException("Invalid Login.");
+            }
+
+            if (storedUser != null)
+            {
+                
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var claims = new List<Claim>
