@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
     if (this.form.valid) {
       this.credentials.userName = this.form.controls['username'].value;
       this.credentials.password = this.form.controls['password'].value;
-      this.invalidLogin = true;
+      this.invalidLogin = true; // this needs work, shows invalid message for split second but best work around i found since on invalid it stops at first switchmap
       this.http
         .post<AuthenticatedResponse>(
           'https://localhost:7224/api/auth/login',
@@ -130,9 +130,9 @@ export class LoginComponent implements OnInit {
             state: res.profile.state,
             raceResults: allRaces,
           };
-          this.riderService.localProfile = racerProfileResponse;
+          this.riderService.localProfile = racerProfileResponse; // this should be stored in local storage since we could lose state after login page potentially. Rider Profile should then get it from local storage instead of this var.
           this.router.navigateByUrl('/rider-profile');
-        }); //gets user info to be used elsewhere if there is an AMA number on the user, we should build the local profile and redirect them to the rider profile view
+        });
     }
   };
 }
