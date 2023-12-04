@@ -12,12 +12,14 @@
 
 
 export interface Track { 
-    id?: number;
-    name?: string | null;
+    id: number;
+    name: string;
     description?: string | null;
     longitude?: string | null;
     latitude?: string | null;
     slug?: string | null;
     status?: string | null;
+    rating?: string | null;
+    terrain?: string | null;
 }
 

@@ -76,7 +76,12 @@ export class LoginComponent implements OnInit {
             return of(null);
           }),
           switchMap((user: User): Observable<any> => {
+            if (user) {
+              localStorage.setItem('userName', user.userName);
+            }
+
             if (user.amaNumber) {
+              localStorage.setItem('amaNumber', user.amaNumber);
               return this.riderService.getRacerList(user.amaNumber);
             }
             this.router.navigate(['/home']);
@@ -99,6 +104,7 @@ export class LoginComponent implements OnInit {
                 };
                 loggedInRacer = racer;
               });
+              localStorage.setItem('riderSlug', loggedInRacer.slug);
               return this.riderService.getRacerProfile(loggedInRacer.slug);
             }
             return of(null);

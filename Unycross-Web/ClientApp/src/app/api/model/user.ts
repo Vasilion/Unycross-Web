@@ -12,9 +12,9 @@
 
 
 export interface User { 
-    id?: number;
-    userName?: string | null;
-    password?: string | null;
+    id: number;
+    userName: string;
+    password: string;
     amaNumber?: string | null;
 }
 

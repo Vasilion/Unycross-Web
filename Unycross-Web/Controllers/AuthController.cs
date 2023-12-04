@@ -47,7 +47,7 @@ namespace Unycross_Web.Controllers
                     issuer: "https://localhost:7224",
                     audience: "https://localhost:7224",
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(5),
+                    expires: DateTime.Now.AddMinutes(60),
                     signingCredentials: signinCredentials
                 );
 

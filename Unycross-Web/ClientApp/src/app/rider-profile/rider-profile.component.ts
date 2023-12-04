@@ -17,6 +17,7 @@ export class RiderProfileComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   racerProfile: RacerProfile;
+  cleanProfile: RacerProfile;
   racerResults: Event[];
   racerTotalRaces: number = 0;
   racerTotalPodiums: number = 0;
@@ -34,7 +35,25 @@ export class RiderProfileComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.racerProfile = this.riderService.getLocalProfile();
-    this.getRacerResults();
+    console.log(this.racerProfile);
+    if (this.racerProfile == undefined) {
+      const slug = localStorage.getItem('riderSlug');
+      if (slug) {
+        this.buildRacerProfile(slug);
+      } else {
+        this.isRacer();
+      }
+    } else {
+      this.getRacerResults();
+    }
+  }
+
+  isRacer(): boolean {
+    if (this.racerProfile == undefined) {
+      this.isLoading = false;
+      return false;
+    }
+    return true;
   }
 
   getRacerResults() {

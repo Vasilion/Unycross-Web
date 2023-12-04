@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { RacerProfile } from '../interfaces/rider';
+import { RiderService } from '../services/rider.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,7 +11,12 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 })
 export class NavMenuComponent {
   isExpanded = false;
-  constructor(private router: Router, private jwtHelper: JwtHelperService) {}
+  cleanProfile: RacerProfile;
+  constructor(
+    private router: Router,
+    private jwtHelper: JwtHelperService,
+    private riderService: RiderService
+  ) {}
 
   collapse() {
     this.isExpanded = false;
@@ -28,7 +35,8 @@ export class NavMenuComponent {
   };
 
   logOut = () => {
-    localStorage.removeItem('jwt');
+    localStorage.clear();
+    this.riderService.updateLocalProfile(this.cleanProfile);
     this.router.navigate(['/']);
   };
 }

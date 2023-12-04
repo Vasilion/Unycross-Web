@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Unycross_Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,9 @@ builder.Services.AddDbContext<UnycrossContext>(options =>
 
 //swagger code gen
 builder.Services.AddSwaggerGen();
+
+//ADD CUSTOM SERVICES
+builder.Services.AddScoped<TrackService>();
 
 var app = builder.Build();
 

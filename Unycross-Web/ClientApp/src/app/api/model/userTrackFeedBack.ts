@@ -11,10 +11,12 @@
  */
 
 
-export interface Rider { 
+export interface UserTrackFeedBack { 
     id: number;
-    firstName: string;
-    lastName: string;
-    amaNumber?: string | null;
+    trackId: number;
+    userId: number;
+    terrain?: string | null;
+    rating?: number | null;
+    review?: string | null;
 }
 
