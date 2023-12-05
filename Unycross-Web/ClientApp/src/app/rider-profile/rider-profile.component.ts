@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatAccordion } from '@angular/material';
+
+import { MatTableDataSource } from '@angular/material/table';
 import { switchMap } from 'rxjs';
 import {
   Event,
@@ -14,11 +15,10 @@ import { RiderService } from '../services/rider.service';
   styleUrls: ['./rider-profile.component.css'],
 })
 export class RiderProfileComponent implements OnInit {
-  @ViewChild(MatAccordion) accordion: MatAccordion;
-
   racerProfile: RacerProfile;
   cleanProfile: RacerProfile;
   racerResults: Event[];
+  isUserProfile: boolean;
   racerTotalRaces: number = 0;
   racerTotalPodiums: number = 0;
   panelOpenState: boolean = false;
@@ -29,14 +29,34 @@ export class RiderProfileComponent implements OnInit {
   isLoading: boolean = false;
   experienceProgress: number = 0;
   rankCss: string = '';
+  isShowingRaceHistory: boolean = false;
+  displayedColumns: string[] = [
+    'Event',
+    'Venue',
+    'City',
+    'District',
+    'Class',
+    'Date',
+    'Overall',
+  ];
+  public dataSource: MatTableDataSource<Event> = new MatTableDataSource<Event>(
+    []
+  );
 
   constructor(private riderService: RiderService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
     this.racerProfile = this.riderService.getLocalProfile();
-    console.log(this.racerProfile);
-    if (this.racerProfile == undefined) {
+    this.isUserProfile = this.riderService.checkUserProfile();
+    if (this.isUserProfile) {
+      const userSlug = localStorage.getItem('riderSlug');
+      if (userSlug) {
+        this.buildRacerProfile(userSlug);
+      }
+    } else if (this.racerProfile) {
+      this.buildRacerProfile(this.racerProfile.slug);
+    } else if (this.racerProfile == undefined) {
       const slug = localStorage.getItem('riderSlug');
       if (slug) {
         this.buildRacerProfile(slug);
@@ -54,6 +74,10 @@ export class RiderProfileComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  public toggleRaceHistory(): void {
+    this.isShowingRaceHistory = !this.isShowingRaceHistory;
   }
 
   getRacerResults() {
@@ -167,6 +191,7 @@ export class RiderProfileComponent implements OnInit {
           allResults.push(result);
         });
         this.racerResults = allResults.reverse();
+        this.dataSource = new MatTableDataSource<Event>(this.racerResults);
         this.racerTotalRaces = allResults.length;
         this.setRiderRank(this.racerResults);
         this.isLoading = false;

@@ -14,9 +14,9 @@
         </mat-label>
       </p>
       <p>
-        <label>
+        <mat-label>
           <h2><b>AMA Member: </b>{{ racerProfile.amaNumber }}</h2>
-        </label>
+        </mat-label>
       </p>
       <h2>
         <b>Rank: </b><span [ngClass]="rankCss">{{ riderRank }}</span>
@@ -41,48 +41,112 @@
         {{ racerProfile.state.toUpperCase() }}
       </p>
     </div>
+    <mat-divider></mat-divider>
+    <div class="tracks-list">
+      <p>
+        <mat-label><h1>Favorite Tracks</h1></mat-label>
+      </p>
+      <ul>
+        <li>test</li>
+        <li>test</li>
+      </ul>
+    </div>
   </div>
   <div *ngIf="!isLoading" class="col-12 col-md-5 rider-info">
-    <div class="race-list">
-      <div>
-        <h1>Race History</h1>
-      </div>
-      <mat-card class="wider-card">
-        <div>
-          <div>
-            <div
-              *ngFor="let r of racerResults; let last = last"
-              lines="full"
-              class="race-list-data"
-            >
-              <label>
-                <h2>
-                  <b>{{ r.eventName }} {{ r.year }}</b>
-                </h2>
-                <p [hidden]="r.trackName == 'Unknown AMA Venue'">
-                  <b>Venue:</b> {{ r.trackName }}
-                </p>
-                <p><b>City:</b> {{ r.city }}, {{ r.state }}</p>
-                <p><b>District:</b> {{ r.district }}</p>
-                <p><b>Class:</b> {{ r.class }}</p>
-                <p><b>Date:</b> {{ r.dateString | date : "longDate" }}</p>
-                <p><b>Overall:</b> {{ r.overallResult }}</p>
-                <p>
-                  <button
-                    mat-raised-button
-                    color="primary"
-                    id="{{ modalID }}"
-                    expand="block"
-                    (click)="getRaceDetails(r.classSlug)"
-                  >
-                    View Results
-                  </button>
-                </p>
-              </label>
-              <mat-divider *ngIf="!last"></mat-divider>
-            </div>
-          </div>
+    <div class="right">
+      <button
+        mat-raised-button
+        color="primary"
+        class="race-history-btn"
+        (click)="toggleRaceHistory()"
+      >
+        {{ isShowingRaceHistory ? "Hide" : "Show" }} Race History
+      </button>
+    </div>
+    <div class="race-list" *ngIf="isShowingRaceHistory">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 demo-table"
+        *ngIf="racerResults.length > 0 && !isLoading"
+      >
+        <ng-container matColumnDef="Event">
+          <th mat-header-cell class="center" *matHeaderCellDef>Event</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.eventName }} {{ element.year }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Venue">
+          <th mat-header-cell class="center" *matHeaderCellDef>Venue</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.trackName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="City">
+          <th mat-header-cell class="center" *matHeaderCellDef>City</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.city }} {{ element.state }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="District">
+          <th mat-header-cell class="center" *matHeaderCellDef>District</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.district }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Class">
+          <th mat-header-cell class="center" *matHeaderCellDef>Class</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.class }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Date">
+          <th mat-header-cell class="center" *matHeaderCellDef>Date</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.dateString | date : "longDate" }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Overall">
+          <th mat-header-cell class="center" *matHeaderCellDef>Overall</th>
+          <td mat-cell class="cell-pad" *matCellDef="let element">
+            {{ element.overallResult > 42 ? "DNF" : element.overallResult }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <div class="post-content">
+      <mat-card>
+        <h2>What's New?</h2>
+        <form class="post-form">
+          <mat-form-field class="full">
+            <textarea
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="10"
+              placeholder="Share something...."
+              matInput
+              appearance="none"
+            ></textarea>
+          </mat-form-field>
+        </form>
+        <div class="right">
+          <button mat-raised-button color="primary">Post</button>
         </div>
+      </mat-card>
+    </div>
+    <div class="feed">
+      <mat-card class="feed-card">
+        <h2>MX Feed</h2>
       </mat-card>
     </div>
   </div>

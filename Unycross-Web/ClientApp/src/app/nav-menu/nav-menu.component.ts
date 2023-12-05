@@ -34,6 +34,10 @@ export class NavMenuComponent {
     return false;
   };
 
+  setUserProfile() {
+    this.riderService.isUserProfile = true;
+  }
+
   logOut = () => {
     localStorage.clear();
     this.riderService.updateLocalProfile(this.cleanProfile);

@@ -128,7 +128,9 @@ export class TrackFinderComponent implements OnInit {
                 '°</span>' +
                 '<span> ' +
                 this.trackWeather.condition +
-                '</span></p></div>';
+                '</span></p></div><br /><div style="text-align: left;"><p><b>Tire Choice:</b> <i>Voted Value Gos Here</i></p></div>' +
+                '<div style="text-align: left;"><p><b>Terrain:</b> <i>Voted Value Gos Here</i></p></div>' +
+                '<div style="text-align: left;"><p><b>Rating:</b> <i>Voted Value Gos Here</i></p></div>';
               infowindow.setContent(contentString);
             });
           infowindow.open({

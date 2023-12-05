@@ -118,6 +118,10 @@ aside,
 	padding: 5px 15px;
 }
 
+.full{
+	width: 100%;
+}
+
 @media (min-width: 1921px) {
 	body {
 		font-size: 18px;

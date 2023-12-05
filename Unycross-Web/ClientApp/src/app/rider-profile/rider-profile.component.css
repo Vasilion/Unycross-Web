@@ -3,7 +3,7 @@
 }
 
 .race-list{
-    margin-top: 10px;
+
 }
 
 .rider-profile{
@@ -23,6 +23,10 @@
     margin-left: 10px;
     width: 40vw;
     text-align: center;
+}
+
+.race-history-btn{
+    margin-bottom: 10px;
 }
 
 .race-list-data{
@@ -51,4 +55,48 @@ img {
 
 .rank{
     max-width: 70%;
+}
+
+.tracks-list{
+    margin-top: 10px;
+}
+
+.center{
+    text-align: center;
+}
+
+.cell-pad{
+    padding: 5px;
+}
+
+.right{
+    text-align: right;
+}
+
+.post-content{
+    margin-top: 10px;
+    
+}
+
+.post-form{
+    width: 100%;
+    margin-top: 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.content-area{
+    border-radius: 10px;
+    border: solid 3px rgba(255, 255, 255, 0.473);
+    box-shadow: 0 0 3px 2px rgba(204, 204, 204, 0.445);
+}
+
+.feed{
+    min-height: 100%;
+    display: contents;
+}
+
+.feed-card{
+    min-height: 100%;
+    margin-top: 10px;
 }

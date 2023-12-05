@@ -8,6 +8,7 @@ import { RacerProfile } from '../interfaces/rider';
 })
 export class RiderService {
   localProfile: RacerProfile;
+  isUserProfile: boolean;
 
   constructor(private http: HttpClient) {}
 
@@ -19,6 +20,9 @@ export class RiderService {
     return this.localProfile;
   }
 
+  public checkUserProfile() {
+    return this.isUserProfile;
+  }
   // returns a list of racers
   public getRacerList(racerName: string): Observable<any> {
     let url =
