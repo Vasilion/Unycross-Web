@@ -63,6 +63,7 @@
         {{ isShowingRaceHistory ? "Hide" : "Show" }} Race History
       </button>
     </div>
+    <mat-divider *ngIf="!isShowingRaceHistory"></mat-divider>
     <div class="race-list" *ngIf="isShowingRaceHistory">
       <table
         mat-table
@@ -144,6 +145,7 @@
         </div>
       </mat-card>
     </div>
+    <mat-divider class="feed-divider"></mat-divider>
     <div class="feed">
       <mat-card class="feed-card">
         <h2>MX Feed</h2>

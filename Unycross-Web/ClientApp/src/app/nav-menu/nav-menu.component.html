@@ -1,9 +1,9 @@
 <header>
   <nav
-    class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    class="navbar navbar-expand-sm navbar-toggleable-sm my-nav box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/home']">Unycross</a>
+      <span class="navbar-brand uny" [routerLink]="['/home']">Unycross</span>
       <button
         class="navbar-toggler"
         type="button"
@@ -26,29 +26,25 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/home']">Home</a>
+            <a class="nav-link" [routerLink]="['/home']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a
-              class="nav-link text-dark"
-              (click)="setUserProfile()"
-              [routerLink]="['/rider-profile']"
-              >Profile</a
-            >
+            <a class="nav-link" (click)="buildUserProfile()">Profile</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/search-rider']"
+            <a class="nav-link" [routerLink]="['/search-rider']"
               >Rider Lookup</a
             >
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/track-finder']"
+            <a class="nav-link" [routerLink]="['/track-finder']"
               >Track Finder</a
             >
           </li>
           <button
             mat-raised-button
-            class="nav-item"
+            color="basic"
+            class="nav-item nav-logout"
             [routerLinkActive]="['link-active']"
             (click)="logOut()"
           >

@@ -4,6 +4,27 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+a:hover{
+  cursor: pointer;
+}
+
+.nav-logout{
+  margin-left: 15px;
+}
+
+.my-nav{
+  background-color: #302f2f;
+	color: rgb(255, 255, 255);
+}
+
+.my-nav a{
+  color: rgb(255, 255, 255);
+}
+
+.uny{
+  font-size: 24px;
+}
+
 html {
   font-size: 14px;
 }

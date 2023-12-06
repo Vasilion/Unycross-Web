@@ -34,8 +34,13 @@ export class NavMenuComponent {
     return false;
   };
 
-  setUserProfile() {
-    this.riderService.isUserProfile = true;
+  buildUserProfile() {
+    const userSlug = localStorage.getItem('riderSlug');
+    if (userSlug) {
+      this.riderService.buildUserProfile(userSlug);
+    } else {
+      this.router.navigateByUrl('/rider-profile');
+    }
   }
 
   logOut = () => {

@@ -1,7 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { RacerProfile } from '../interfaces/rider';
+import { RacerProfile, RacerProfileRaceResult } from '../interfaces/rider';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class RiderService {
   localProfile: RacerProfile;
   isUserProfile: boolean;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   public updateLocalProfile(racerProfile: RacerProfile) {
     this.localProfile = racerProfile;
@@ -22,6 +23,36 @@ export class RiderService {
 
   public checkUserProfile() {
     return this.isUserProfile;
+  }
+
+  public buildUserProfile(racerSlug: string) {
+    this.getRacerProfile(racerSlug).subscribe((res) => {
+      let allRaces: RacerProfileRaceResult[] = [];
+      res.runs.forEach((race) => {
+        let result: RacerProfileRaceResult = {
+          class: race.name,
+          position: race.results[0].position_in_class,
+          dateString: race.started_at,
+        };
+        allRaces.push(result);
+      });
+      let racerProfileResponse: RacerProfile = {
+        firstName: res.profile.first_name,
+        lastName: res.profile.last_name,
+        birthdate: res.profile.birthdate,
+        city: res.profile.city,
+        homeTown: res.profile.homeTown,
+        amaNumber: res.profile.meta.ama_num,
+        class: res.profile.meta.levels.MX,
+        slug: res.profile.slug,
+        state: res.profile.state,
+        raceResults: allRaces,
+      };
+      this.localProfile = racerProfileResponse;
+      this.router
+        .navigateByUrl('/', { skipLocationChange: true })
+        .then(() => this.router.navigate(['/rider-profile']));
+    });
   }
   // returns a list of racers
   public getRacerList(racerName: string): Observable<any> {

@@ -1,40 +1,49 @@
 <!-- Import ReactiveFormsModule in your component if you haven't already -->
 <!-- import { ReactiveFormsModule } from '@angular/forms'; -->
 
-<div class="content">
-  <mat-card class="login-container">
-    <mat-card-content>
-      <!-- Remove #loginForm="ngForm" -->
-      <form (ngSubmit)="login()" [formGroup]="form" class="login-form">
-        <div *ngIf="invalidLogin" class="alert alert-danger">
-          Invalid username or password.
-        </div>
-        <p>
-          <mat-form-field class="login-input">
-            <mat-label for="username">Username</mat-label>
-            <input type="text" matInput formControlName="username" />
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field class="login-input">
-            <mat-label>Password</mat-label>
-            <input type="password" matInput formControlName="password" />
-          </mat-form-field>
-        </p>
-        <div class="button">
-          <button
-            type="submit"
-            mat-raised-button
-            color="primary"
-            [disabled]="!form.valid"
-          >
-            Login
-          </button>
-        </div>
-        <div class="sso">
-          <a href="#" class="fa fa-google"></a>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div class="content col-12">
+  <div class="logo">
+    <img src="../../assets/img/logo1withtext.png" />
+  </div>
+  <div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+      <mat-card class="login-container">
+        <mat-card-content>
+          <!-- Remove #loginForm="ngForm" -->
+          <form (ngSubmit)="login()" [formGroup]="form" class="login-form">
+            <div *ngIf="invalidLogin" class="alert alert-danger">
+              Invalid username or password.
+            </div>
+            <p>
+              <mat-form-field class="login-input">
+                <mat-label for="username">Username</mat-label>
+                <input type="text" matInput formControlName="username" />
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="login-input">
+                <mat-label>Password</mat-label>
+                <input type="password" matInput formControlName="password" />
+              </mat-form-field>
+            </p>
+            <div class="button">
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                [disabled]="!form.valid"
+              >
+                Lets Ride!
+              </button>
+            </div>
+            <div class="sso">
+              <a href="#" class="fa fa-google"></a>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-3"></div>
+  </div>
 </div>
