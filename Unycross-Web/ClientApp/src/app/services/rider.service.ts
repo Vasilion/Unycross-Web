@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { RacerProfile, RacerProfileRaceResult } from '../interfaces/rider';
 
 @Injectable({
@@ -81,7 +82,7 @@ export class RiderService {
   }
 
   public getTracks(): Observable<any> {
-    let url = 'https://localhost:7224/api/Tracks';
+    let url = environment.UnyApiBaseUrl + '/api/Tracks';
     return this.http.get(url);
   }
 

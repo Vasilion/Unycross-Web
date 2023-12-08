@@ -12,6 +12,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import { Login, Rider, User, UsersCodegenService } from '../api';
 import { AuthenticatedResponse } from '../interfaces/auth';
@@ -55,7 +56,7 @@ export class LoginComponent implements OnInit {
       this.invalidLogin = true; // this needs work, shows invalid message for split second but best work around i found since on invalid it stops at first switchmap
       this.http
         .post<AuthenticatedResponse>(
-          'https://localhost:7224/api/auth/login',
+          environment.UnyApiBaseUrl + '/api/auth/login',
           this.credentials,
           {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

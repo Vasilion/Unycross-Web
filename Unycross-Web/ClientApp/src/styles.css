@@ -35,6 +35,10 @@ body {
 	font-family: 'Times', Times, serif;
 	font-size: 16px;
 	background-color: rgb(27, 27, 27);
+	background-image:url(../src/assets/img/background2transparent.png);
+	background-blend-mode:multiply;
+	background-size: cover;
+	background-repeat:no-repeat;
 	color: #aaa;
 }
 

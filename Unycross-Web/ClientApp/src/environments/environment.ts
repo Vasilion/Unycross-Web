@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://localhost:44474/',
+  strapiBaseUrl: 'http://localhost:1337/api',
+  UnyApiBaseUrl: 'https://localhost:7224',
 };
 
 /*
