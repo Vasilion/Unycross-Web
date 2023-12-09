@@ -10,12 +10,12 @@ export class BlogService {
   constructor(private http: HttpClient) {}
 
   public getAllBlogPosts(): Observable<any> {
-    let url = environment.strapiBaseUrl + '/blog-posts';
+    let url = environment.strapiBaseUrl + '/blog-posts' + '?populate=*';
     return this.http.get(url);
   }
 
   public getBlogPostById(id: number): Observable<any> {
-    let url = environment.strapiBaseUrl + '/blog-posts/' + id;
+    let url = environment.strapiBaseUrl + '/blog-posts/' + id + '?populate=*';
     return this.http.get(url);
   }
 }

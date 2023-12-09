@@ -31,6 +31,7 @@ import { RiderProfileComponent } from './rider-profile/rider-profile.component';
 import { TrackFinderComponent } from './track-finder/track-finder.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
+import { MarkdownModule } from 'ngx-markdown';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -64,6 +65,7 @@ export function tokenGetter() {
     MatProgressSpinnerModule,
     MatSliderModule,
     MatTableModule,
+    MarkdownModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

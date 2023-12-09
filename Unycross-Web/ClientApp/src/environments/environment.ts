@@ -7,6 +7,7 @@ export const environment = {
   baseUrl: 'https://localhost:44474/',
   strapiBaseUrl: 'http://localhost:1337/api',
   UnyApiBaseUrl: 'https://localhost:7224',
+  strapiFeaturedImageBaseUrl: 'http://localhost:1337',
 };
 
 /*
