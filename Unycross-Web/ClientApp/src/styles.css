@@ -8,6 +8,10 @@ code {
   color: #e01a76;
 }
 
+.center{
+	text-align: center;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

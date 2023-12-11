@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm my-nav box-shadow mb-3"
   >
     <div class="container">
-      <span class="navbar-brand uny" [routerLink]="['/home']">Unycross</span>
+      <span class="uny" [routerLink]="['/home']">Unycross</span>
       <button
         class="navbar-toggler"
         type="button"
@@ -26,7 +26,7 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link" [routerLink]="['/home']">Home</a>
+            <a class="nav-link" [routerLink]="['/home']">Blog</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
             <a class="nav-link" (click)="buildUserProfile()">Profile</a>

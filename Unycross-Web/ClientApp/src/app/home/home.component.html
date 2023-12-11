@@ -1,3 +1,36 @@
-<h1>{{ blogTitle }}</h1>
-<img [src]="blogFeaturedImage" />
-<markdown [data]="blogMarkTest"></markdown>
+<div class="col-12">
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="all-post-container col-8 center">
+      <div class="row">
+        <div
+          *ngFor="let post of allBlogPosts.data"
+          class="col-4 post-preview-container"
+        >
+          <mat-card class="post-preview-card mat-card-content">
+            <h1>{{ post.attributes.Title }}</h1>
+            <div class="feature-img-container center">
+              <img
+                class="feature-img"
+                [src]="
+                  imageBaseUrl +
+                  post.attributes.FeaturedImage.data[0].attributes.url
+                "
+              />
+            </div>
+            <div class="blog-info">
+              <span
+                >{{ post.attributes.Author }} |
+                {{ post.attributes.updatedAt | date : "mediumDate" }}
+              </span>
+            </div>
+            <div class="blog-summary">
+              <p>{{ post.attributes.Summary }}</p>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+    <div class="col-2"></div>
+  </div>
+</div>

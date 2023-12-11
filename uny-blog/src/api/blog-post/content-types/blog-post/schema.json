@@ -28,6 +28,12 @@
     },
     "Content": {
       "type": "richtext"
+    },
+    "Summary": {
+      "type": "text"
+    },
+    "Author": {
+      "type": "string"
     }
   }
 }
