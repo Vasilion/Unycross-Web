@@ -32,6 +32,7 @@ import { TrackFinderComponent } from './track-finder/track-finder.component';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
 import { MarkdownModule } from 'ngx-markdown';
+import { SignUpComponent } from './sign-up/sign-up.component';
 
 export function tokenGetter() {
   return localStorage.getItem('jwt');
@@ -46,6 +47,7 @@ export function tokenGetter() {
     RiderSearchComponent,
     RiderProfileComponent,
     TrackFinderComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -75,6 +77,7 @@ export function tokenGetter() {
     }),
     RouterModule.forRoot([
       { path: '', component: LoginComponent, pathMatch: 'full' },
+      { path: 'sign-up', component: SignUpComponent },
       { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
       {
         path: 'search-rider',

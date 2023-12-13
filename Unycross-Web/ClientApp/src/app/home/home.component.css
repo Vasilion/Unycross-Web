@@ -16,8 +16,8 @@ h1{
 
 .post-preview-card{
     background-color: rgb(12, 12, 12);
-    width: 20vw;
-    height: 45vh;
+    width: 100%;
+    height: fit-content;
     overflow: hidden;
     word-wrap: break-word;
     -ms-word-break: break-all;
@@ -30,8 +30,6 @@ h1{
 }
 
 .feature-img-container{
-    width: 300px;
-    height: 300px;
     display: inline-block;
     margin-bottom: 10px;
 }

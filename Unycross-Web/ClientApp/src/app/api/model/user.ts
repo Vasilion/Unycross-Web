@@ -16,5 +16,6 @@ export interface User {
     userName: string;
     password: string;
     amaNumber?: string | null;
+    email?: string | null;
 }
 

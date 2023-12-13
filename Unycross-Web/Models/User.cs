@@ -11,5 +11,6 @@ namespace Unycross_Web.Models
         [Required]
         public string Password { get; set; }
         public string? AmaNumber { get; set; }
+        public string? Email { get; set; }
     }
 }

@@ -11,10 +11,7 @@
       <mat-card class="login-container">
         <mat-card-content>
           <!-- Remove #loginForm="ngForm" -->
-          <form (ngSubmit)="login()" [formGroup]="form" class="login-form">
-            <div *ngIf="invalidLogin" class="alert alert-danger">
-              Invalid username or password.
-            </div>
+          <form (ngSubmit)="signup()" [formGroup]="form" class="login-form">
             <p>
               <mat-form-field class="login-input">
                 <mat-label for="username">Username</mat-label>
@@ -27,21 +24,24 @@
                 <input type="password" matInput formControlName="password" />
               </mat-form-field>
             </p>
+            <p>
+              <mat-form-field class="login-input">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput formControlName="email" />
+              </mat-form-field>
+            </p>
+            <p>
+              <mat-form-field class="login-input">
+                <mat-label>Ama Number</mat-label>
+                <input type="text" matInput formControlName="amaNumber" />
+              </mat-form-field>
+            </p>
             <div class="button">
               <button
                 type="submit"
                 mat-raised-button
                 color="primary"
-                [disabled]="!form.valid"
-              >
-                Lets Ride!
-              </button>
-              <button
-                type="button"
-                mat-raised-button
-                color="accent"
                 class="sign-up-btn"
-                (click)="signup()"
               >
                 Sign Up!
               </button>

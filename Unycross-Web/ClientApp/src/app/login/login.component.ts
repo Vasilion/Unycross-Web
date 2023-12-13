@@ -49,6 +49,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  signup(): void {
+    this.router.navigateByUrl('/sign-up');
+  }
+
   login = (): void => {
     if (this.form.valid) {
       this.credentials.userName = this.form.controls['username'].value;
