@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User, UsersCodegenService } from '../api';
+import { UserDto, UsersCodegenService } from '../api';
 
 @Component({
   selector: 'app-sign-up',
@@ -34,7 +34,7 @@ export class SignUpComponent implements OnInit {
           this.form.controls['email'].value,
           this.form.controls['amaNumber'].value
         )
-        .subscribe((res: User) => {
+        .subscribe((res: UserDto) => {
           console.log('signed up' + res.userName + ' check db');
         });
     }

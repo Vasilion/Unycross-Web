@@ -11,8 +11,7 @@
  */
 
 
-export interface User { 
-    id: number;
+export interface UserDto { 
     userName: string;
     password: string;
     amaNumber?: string | null;

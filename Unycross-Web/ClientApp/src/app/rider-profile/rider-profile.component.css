@@ -109,3 +109,11 @@ img {
     margin-bottom: 10px;
     margin-top: 10px;
 }
+
+.post {
+    background-color: #616060;
+}
+
+.feed-content{
+    text-align: center;
+}

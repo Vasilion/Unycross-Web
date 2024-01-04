@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { Observable, of, Subject, switchMap, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { Login, Rider, User, UsersCodegenService } from '../api';
+import { Login, UserDto, UsersCodegenService } from '../api';
 import { AuthenticatedResponse } from '../interfaces/auth';
 import {
   Racer,
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
             }
             return of(null);
           }),
-          switchMap((user: User): Observable<any> => {
+          switchMap((user: UserDto): Observable<any> => {
             if (user) {
               localStorage.setItem('userName', user.userName);
             }

@@ -16,15 +16,31 @@ namespace Unycross_Web.Controllers
         }
 
         [HttpGet, Authorize(Roles = "UnyUser")]
-        public Models.User GetUserByStoredAmaNumber(string userName, string password)
+        public Dtos.UserDto GetUserByStoredAmaNumber(string userName, string password)
         {
-            return _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName && u.Password == password);
+            Models.User user = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName && u.Password == password);
+
+            Dtos.UserDto userDto = new Dtos.UserDto()
+            {
+                UserName = user.UserName,
+                Password = user.Password,
+                Email = user.Email,
+                AmaNumber = user.AmaNumber
+            };
+
+            return userDto;
         }
 
         [Route("sign-up")]
         [HttpPost]
-        public Models.User SignUpUser(string userName, string password, string email, string? amaNumber)
+        public Dtos.UserDto SignUpUser(string userName, string password, string email, string? amaNumber)
         {
+            Models.User existingUser = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName || u.Email == email);
+
+            if(existingUser != null)
+            {
+                throw new Exception("User name or email already in use");
+            }
             Models.User user = new Models.User()
             {
                 UserName = userName,
@@ -32,18 +48,18 @@ namespace Unycross_Web.Controllers
                 Email = email,
                 AmaNumber = amaNumber
             };
-
-            Models.User existingUser = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName || u.Email == email);
-
-            if(existingUser != null)
+            Dtos.UserDto userDto = new Dtos.UserDto()
             {
-                throw new Exception("User name or email already in use");
-            }
+                UserName = userName,
+                Password = password,
+                Email = email,
+                AmaNumber = amaNumber
+            };
 
             _unycrossContext.Users.Add(user);
             _unycrossContext.SaveChanges();
 
-            return user;
+            return userDto;
         }
     }
 }
