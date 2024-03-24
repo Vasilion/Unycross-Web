@@ -15,9 +15,10 @@ namespace Unycross_Web.Controllers
             _unycrossContext = unycrossContext;
         }
 
-        [HttpGet, Authorize(Roles = "UnyUser")]
+        [HttpGet]
         public IEnumerable<Models.Rider> GetAllRiders()
         {
+            // needs dto, but not sure im even using this for anything?
             return _unycrossContext.Riders?.OrderBy(p => p.Id);
         }
 

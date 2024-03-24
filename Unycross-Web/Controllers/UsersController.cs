@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Unycross_Web.Context;
+using Unycross_Web.Dtos;
+using Unycross_Web.Models;
 
 namespace Unycross_Web.Controllers
 {
@@ -15,12 +16,12 @@ namespace Unycross_Web.Controllers
             _unycrossContext = unycrossContext;
         }
 
-        [HttpGet, Authorize(Roles = "UnyUser")]
-        public Dtos.UserDto GetUserByStoredAmaNumber(string userName, string password)
+        [HttpGet]
+        public UserDto GetUserByStoredAmaNumber(string userName, string password)
         {
-            Models.User user = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName && u.Password == password);
+            User user = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName && u.Password == password);
 
-            Dtos.UserDto userDto = new Dtos.UserDto()
+            UserDto userDto = new UserDto()
             {
                 UserName = user.UserName,
                 Password = user.Password,
@@ -33,22 +34,22 @@ namespace Unycross_Web.Controllers
 
         [Route("sign-up")]
         [HttpPost]
-        public Dtos.UserDto SignUpUser(string userName, string password, string email, string? amaNumber)
+        public UserDto SignUpUser(string userName, string password, string email, string? amaNumber)
         {
-            Models.User existingUser = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName || u.Email == email);
+            User existingUser = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName || u.Email == email);
 
             if(existingUser != null)
             {
                 throw new Exception("User name or email already in use");
             }
-            Models.User user = new Models.User()
+            User user = new User()
             {
                 UserName = userName,
                 Password = password,
                 Email = email,
                 AmaNumber = amaNumber
             };
-            Dtos.UserDto userDto = new Dtos.UserDto()
+            UserDto userDto = new UserDto()
             {
                 UserName = userName,
                 Password = password,

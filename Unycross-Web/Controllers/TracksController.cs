@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Unycross_Web.Context;
+using Unycross_Web.Dtos;
 using Unycross_Web.Models;
 using Unycross_Web.Services;
 
@@ -18,15 +19,23 @@ namespace Unycross_Web.Controllers
             _trackService = trackService;
         }
 
-        [HttpGet, Authorize(Roles = "UnyUser")]
-        public IEnumerable<Models.Track> GetAllTracks()
+        [HttpGet]
+        public IEnumerable<TrackDto> GetAllTracks()
         {
-            return _unycrossContext.Tracks.OrderBy(t => t.Id);
+           return _trackService.GetAllTracks();
+        }
+
+        [Route("GetUserTrackFeedBack")]
+        [HttpGet]
+        public IEnumerable<UserTrackFeedBackDto> GetAllUserTrackFeedBack(int trackId)
+        {
+            return _trackService.GetAllTrackFeedBack(trackId);
+
         }
 
         [Route("UpdateUserTrackFeedBack")]
         [HttpPost, Authorize(Roles = "UnyUser")]
-        public UserTrackFeedBack UpdateUserTrackFeedBack(int trackId, int userId, string? terrain, int? rating, string? review )
+        public UserTrackFeedBackDto UpdateUserTrackFeedBack(int trackId, int userId, string? terrain, int? rating, string? review )
         {
             return _trackService.UpdateUserTrackFeedBack(trackId, userId, terrain, rating, review); 
 

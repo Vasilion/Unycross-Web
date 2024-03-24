@@ -1,5 +1,5 @@
 export * from './login';
 export * from './rider';
-export * from './track';
+export * from './trackDto';
 export * from './userDto';
-export * from './userTrackFeedBack';
+export * from './userTrackFeedBackDto';

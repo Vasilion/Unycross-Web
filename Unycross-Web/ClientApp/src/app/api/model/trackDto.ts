@@ -11,9 +11,9 @@
  */
 
 
-export interface Track { 
-    id: number;
-    name: string;
+export interface TrackDto { 
+    id?: number;
+    name?: string | null;
     description?: string | null;
     longitude?: string | null;
     latitude?: string | null;

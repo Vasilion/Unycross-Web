@@ -11,10 +11,10 @@
  */
 
 
-export interface UserTrackFeedBack { 
-    id: number;
-    trackId: number;
-    userId: number;
+export interface UserTrackFeedBackDto { 
+    id?: number;
+    trackId?: number;
+    userId?: number;
     terrain?: string | null;
     rating?: number | null;
     review?: string | null;

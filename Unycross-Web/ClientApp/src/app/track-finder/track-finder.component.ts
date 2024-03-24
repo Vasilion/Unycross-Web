@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Loader } from '@googlemaps/js-api-loader';
-import { Track, TracksCodegenService } from '../api';
+import { TracksCodegenService, UserTrackFeedBackDto } from '../api';
+import { TrackDto } from '../api/model/trackDto';
 import { Marker, TrackWeather } from '../interfaces/rider';
 import { RiderService } from '../services/rider.service';
 
@@ -13,8 +14,11 @@ import { RiderService } from '../services/rider.service';
 export class TrackFinderComponent implements OnInit {
   zipCodeField: FormControl = new FormControl(null, []);
   userRadius: FormControl = new FormControl(null, []);
-  tracks: Track[] = [];
+  tracks: TrackDto[] = [];
   trackWeather: TrackWeather;
+  trackFeedBack: UserTrackFeedBackDto[];
+  trackRating: string =
+    '<i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
   defaultRadius: number = 50;
   raidusMarkers: Marker[] = [];
   radiusCircle: google.maps.Circle;
@@ -27,10 +31,10 @@ export class TrackFinderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.TrackCodegenService.apiTracksGet().subscribe((tracks: Track[]) => {
+    this.TrackCodegenService.apiTracksGet().subscribe((tracks: TrackDto[]) => {
       // console.log(tracks);
       tracks.forEach((track) => {
-        let newTrack: Track = {
+        let newTrack: TrackDto = {
           id: track.id,
           name: track.name,
           description: track.description,
@@ -42,6 +46,52 @@ export class TrackFinderComponent implements OnInit {
         this.tracks.push(newTrack);
       });
       this.initGoogleMap(37.0902, -95.7129, 5);
+    });
+  }
+
+  getTrackFeedBack(trackId: number): void {
+    this.trackRating =
+      '<i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
+    this.TrackCodegenService.apiTracksGetUserTrackFeedBackGet(
+      trackId
+    ).subscribe((feedback: UserTrackFeedBackDto[]) => {
+      if (feedback) {
+        this.trackFeedBack = feedback;
+        let ratings: number[] = feedback.map((f) => f.rating || 0);
+        ratings = ratings.filter((r) => r != 0);
+        const averageRating: number =
+          ratings.reduce((a, b) => a + b) / ratings.length;
+        switch (averageRating) {
+          case 0:
+            this.trackRating =
+              '<i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
+            break;
+          case 1:
+            this.trackRating =
+              '<i class="fa-solid fa-star"></i></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
+            break;
+          case 1:
+            this.trackRating =
+              '<i class="fa-solid fa-star"></i></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
+            break;
+          case 2:
+            this.trackRating =
+              '<i class="fa-solid fa-star"></i></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
+            break;
+          case 3:
+            this.trackRating =
+              '<i class="fa-solid fa-star"></i></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i><i class="fa-regular fa-star"></i>';
+            break;
+          case 4:
+            this.trackRating =
+              '<i class="fa-solid fa-star"></i></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>';
+            break;
+          case 5:
+            this.trackRating =
+              '<i class="fa-solid fa-star"></i></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>';
+            break;
+        }
+      }
     });
   }
 
@@ -76,7 +126,7 @@ export class TrackFinderComponent implements OnInit {
         map.setOptions({ scrollwheel: true });
       });
 
-      this.tracks.forEach((track: Track) => {
+      this.tracks.forEach((track: TrackDto) => {
         contentString = '<h1>' + track.name + '</h1>';
         lat = Number(track.latitude);
         long = Number(track.longitude);
@@ -96,6 +146,9 @@ export class TrackFinderComponent implements OnInit {
 
         marker.addListener('click', () => {
           infowindow.close();
+          if (track.id != undefined) {
+            this.getTrackFeedBack(track.id);
+          }
           contentString = '<h3>Loading...</h3>';
           infowindow = new google.maps.InfoWindow({
             content: contentString,
@@ -112,7 +165,7 @@ export class TrackFinderComponent implements OnInit {
                 img: weather.current.condition.icon,
               };
               contentString =
-                '<div style="text-align: center;"><h2>' +
+                '<div style="text-align: center; width:10vw;"><h2>' +
                 track.name +
                 '</h2>' +
                 '<span>' +
@@ -128,9 +181,10 @@ export class TrackFinderComponent implements OnInit {
                 '°</span>' +
                 '<span> ' +
                 this.trackWeather.condition +
-                '</span></p></div><br /><div style="text-align: left;"><p><b>Tire Choice:</b> <i>Voted Value Gos Here</i></p></div>' +
-                '<div style="text-align: left;"><p><b>Terrain:</b> <i>Voted Value Gos Here</i></p></div>' +
-                '<div style="text-align: left;"><p><b>Rating:</b> <i>Voted Value Gos Here</i></p></div>';
+                '</span></p></div><br /><div><p><b>Tire Choice:</b> <i>Standard </i> - <i>Scoop</i></p></div>' +
+                '<div><p><b>Rating:</b>' +
+                this.trackRating +
+                '</p></div>';
               infowindow.setContent(contentString);
             });
           infowindow.open({
@@ -193,7 +247,7 @@ export class TrackFinderComponent implements OnInit {
   }
 
   async getCoordinatesFromZipCode(zipcode: string): Promise<Marker | null> {
-    const apiKey = 'AIzaSyBZivOLwRx_PuyTkHNOnTvjSFK6YDAQoHg'; // Replace with your actual API key
+    const apiKey = 'AIzaSyB4zMNkYb7LtuIZbo7W-UTAwTDTHsC6kos'; // Replace with your actual API key
 
     const geocodingEndpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
       zipcode
