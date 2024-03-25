@@ -83,6 +83,7 @@ export class LoginComponent implements OnInit {
           switchMap((user: UserDto): Observable<any> => {
             if (user) {
               localStorage.setItem('userName', user.userName);
+              localStorage.setItem('userId', user.id.toString());
             }
 
             if (user.amaNumber) {

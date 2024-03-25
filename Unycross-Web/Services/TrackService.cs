@@ -1,4 +1,5 @@
-﻿using Unycross_Web.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Unycross_Web.Context;
 using Unycross_Web.Dtos;
 using Unycross_Web.Models;
 
@@ -95,6 +96,55 @@ namespace Unycross_Web.Services
             _unycrossContext.UsersTrackFeedBack.Add(feedback);
             _unycrossContext.SaveChanges();
             return feedbackDto;
+
+        }
+
+        public IEnumerable<TrackDto> GetUserFavoriteTracks(int userId)
+        {
+            IEnumerable<FavoriteTrack> favoriteTracks = _unycrossContext.FavoriteTrack
+                .Include(ft => ft.Track)
+                .Where(ft => ft.UserId == userId)
+                .ToList();
+            List<TrackDto> userFavoriteTracks = new List<TrackDto>();
+
+            foreach(FavoriteTrack track in favoriteTracks)
+            {
+                TrackDto favTrack = new TrackDto()
+                {
+                    Name = track.Track.Name,
+                    Latitude = track.Track.Latitude,
+                    Longitude = track.Track.Longitude,
+                };
+                userFavoriteTracks.Add(favTrack);
+            }
+            return userFavoriteTracks;
+
+        }
+
+        public FavoriteTrackDto AddToUserFavoriteTracks(FavoriteTrackDto track)
+        {
+            FavoriteTrack favoriteTrack = new FavoriteTrack()
+            {
+                UserId = track.UserId,
+                TrackId = track.TrackId
+            };
+            _unycrossContext.FavoriteTrack.Add(favoriteTrack);
+            _unycrossContext.SaveChanges();
+            return track;
+
+        }
+
+        public FavoriteTrackDto RemoveFromUserFavoriteTracks(FavoriteTrackDto track)
+        {
+            FavoriteTrack favoriteTrack = _unycrossContext.FavoriteTrack.FirstOrDefault(t => t.UserId == track.UserId && t.TrackId == track.TrackId);
+
+            if(favoriteTrack == null)
+            {
+                throw new FileNotFoundException($"Favorite track does not exist on user ID {track.UserId}.");
+            }
+            _unycrossContext.FavoriteTrack.Remove(favoriteTrack);
+            _unycrossContext.SaveChanges();
+            return track;
 
         }
     }

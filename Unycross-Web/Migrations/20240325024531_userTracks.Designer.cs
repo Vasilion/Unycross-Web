@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Unycross_Web.Context;
 
@@ -11,9 +12,10 @@ using Unycross_Web.Context;
 namespace Unycross_Web.Migrations
 {
     [DbContext(typeof(UnycrossContext))]
-    partial class UnycrossContextModelSnapshot : ModelSnapshot
+    [Migration("20240325024531_userTracks")]
+    partial class userTracks
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

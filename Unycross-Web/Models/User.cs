@@ -12,5 +12,6 @@ namespace Unycross_Web.Models
         public string Password { get; set; }
         public string? AmaNumber { get; set; }
         public string? Email { get; set; }
+        public ICollection<FavoriteTrack>? FavoriteTracks { get; set; }
     }
 }

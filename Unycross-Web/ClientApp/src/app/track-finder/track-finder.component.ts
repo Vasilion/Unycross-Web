@@ -59,8 +59,9 @@ export class TrackFinderComponent implements OnInit {
         this.trackFeedBack = feedback;
         let ratings: number[] = feedback.map((f) => f.rating || 0);
         ratings = ratings.filter((r) => r != 0);
-        const averageRating: number =
-          ratings.reduce((a, b) => a + b) / ratings.length;
+        const averageRating: number = Math.round(
+          ratings.reduce((a, b) => a + b) / ratings.length
+        );
         switch (averageRating) {
           case 0:
             this.trackRating =
@@ -184,7 +185,7 @@ export class TrackFinderComponent implements OnInit {
                 '</span></p></div><br /><div><p><b>Tire Choice:</b> <i>Standard </i> - <i>Scoop</i></p></div>' +
                 '<div><p><b>Rating:</b>' +
                 this.trackRating +
-                '</p></div>';
+                '</p></div><div><button>Add to Favorites</button></div><br /><div><button>Leave a review</button></div>';
               infowindow.setContent(contentString);
             });
           infowindow.open({

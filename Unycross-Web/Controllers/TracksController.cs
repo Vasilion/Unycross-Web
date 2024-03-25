@@ -25,12 +25,33 @@ namespace Unycross_Web.Controllers
            return _trackService.GetAllTracks();
         }
 
+        [Route("GetUserFavoriteTracks")]
+        [HttpGet]
+        public IEnumerable<TrackDto> GetUserFavoriteTracks(int userId)
+        {
+            return _trackService.GetUserFavoriteTracks(userId); 
+        }
+
         [Route("GetUserTrackFeedBack")]
         [HttpGet]
         public IEnumerable<UserTrackFeedBackDto> GetAllUserTrackFeedBack(int trackId)
         {
             return _trackService.GetAllTrackFeedBack(trackId);
 
+        }
+
+        [Route("AddUserFavoriteTrack")]
+        [HttpPost]
+        public FavoriteTrackDto AddToUserFavoriteTracks(FavoriteTrackDto track)
+        {
+            return _trackService.AddToUserFavoriteTracks(track);
+        }
+
+        [Route("RemoveUserFavoriteTrack")]
+        [HttpPost]
+        public FavoriteTrackDto RemoveFromUserFavoriteTracks(FavoriteTrackDto track)
+        {
+            return _trackService.RemoveFromUserFavoriteTracks(track);
         }
 
         [Route("UpdateUserTrackFeedBack")]

@@ -9,15 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { FavoriteTrack } from './favoriteTrack';
 
 
-export interface UserDto { 
-    id: number;
-    userName: string;
-    password: string;
-    amaNumber?: string | null;
-    email?: string | null;
-    favoriteTracks?: Array<FavoriteTrack> | null;
+export interface FavoriteTrackDto { 
+    userId?: number;
+    trackId?: number;
 }
 

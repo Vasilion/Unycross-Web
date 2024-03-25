@@ -38,14 +38,6 @@ export class RiderSearchComponent implements OnInit {
     });
   }
 
-  // public listenToSearch(rider: string): void {
-  //   this.searchNode?.addEventListener('keyup', (event: KeyboardEvent) => {
-  //     if (event.key === 'Enter') {
-  //       this.riderLookup(rider);
-  //     }
-  //   });
-  // }
-
   buildRacerProfile(racerSlug: string) {
     this.riderService.getRacerProfile(racerSlug).subscribe((res) => {
       let allRaces: RacerProfileRaceResult[] = [];

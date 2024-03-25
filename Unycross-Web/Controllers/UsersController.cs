@@ -17,16 +17,18 @@ namespace Unycross_Web.Controllers
         }
 
         [HttpGet]
-        public UserDto GetUserByStoredAmaNumber(string userName, string password)
+        public UserDto GetUserByUserNamePassword(string userName, string password)
         {
             User user = _unycrossContext.Users.FirstOrDefault(u => u.UserName == userName && u.Password == password);
 
             UserDto userDto = new UserDto()
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Password = user.Password,
                 Email = user.Email,
-                AmaNumber = user.AmaNumber
+                AmaNumber = user.AmaNumber,
+                FavoriteTracks = user.FavoriteTracks,
             };
 
             return userDto;

@@ -92,12 +92,10 @@ img {
 }
 
 .feed{
-    min-height: 100%;
     display: contents;
 }
 
 .feed-card{
-    min-height: 100%;
     margin-top: 10px;
 }
 
@@ -108,6 +106,7 @@ img {
 
 .post {
     background-color: #616060;
+    margin-bottom: 10px;
 }
 
 .feed-content{

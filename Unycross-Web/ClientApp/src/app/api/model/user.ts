@@ -12,7 +12,7 @@
 import { FavoriteTrack } from './favoriteTrack';
 
 
-export interface UserDto { 
+export interface User { 
     id: number;
     userName: string;
     password: string;

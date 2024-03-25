@@ -26,6 +26,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { RiderSearchComponent } from './rider-search/rider-search.component';
 import { RiderProfileComponent } from './rider-profile/rider-profile.component';
 import { TrackFinderComponent } from './track-finder/track-finder.component';
@@ -67,6 +68,7 @@ export function tokenGetter() {
     MatProgressSpinnerModule,
     MatSliderModule,
     MatTableModule,
+    MatExpansionModule,
     MarkdownModule.forRoot(),
     JwtModule.forRoot({
       config: {

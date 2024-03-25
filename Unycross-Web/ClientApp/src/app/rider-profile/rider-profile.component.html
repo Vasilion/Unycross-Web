@@ -46,10 +46,21 @@
       <p>
         <mat-label><h1>Favorite Tracks</h1></mat-label>
       </p>
-      <ul>
-        <li>test</li>
-        <li>test</li>
-      </ul>
+      <div>
+        <mat-accordion>
+          <mat-expansion-panel
+            *ngFor="let track of racerFavs"
+            (click)="getTrackWeather(track)"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>{{ track.name }}</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div *ngIf="trackWeather">
+              Current Temp: {{ trackWeather.temp }} °
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
     </div>
   </div>
   <div class="col-3 d-xl-none"></div>
@@ -152,8 +163,20 @@
         <h2>MX Feed</h2>
         <div>
           <mat-card class="post">
-            <div class="feed-content">Post Place Holder</div></mat-card
-          >
+            <div class="feed-content">Post Place Holder</div>
+          </mat-card>
+          <mat-card class="post">
+            <div class="feed-content">Post Place Holder</div>
+          </mat-card>
+          <mat-card class="post">
+            <div class="feed-content">Post Place Holder</div>
+          </mat-card>
+          <mat-card class="post">
+            <div class="feed-content">Post Place Holder</div>
+          </mat-card>
+          <mat-card class="post">
+            <div class="feed-content">Post Place Holder</div>
+          </mat-card>
         </div>
       </mat-card>
     </div>

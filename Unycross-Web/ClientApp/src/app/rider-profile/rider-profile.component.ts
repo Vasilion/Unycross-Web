@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { MatTableDataSource } from '@angular/material/table';
-import { switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
+import { TrackDto, TracksCodegenService } from '../api';
 import {
   Event,
   RacerProfile,
   RacerProfileRaceResult,
+  TrackWeather,
 } from '../interfaces/rider';
 import { RiderService } from '../services/rider.service';
 
@@ -17,7 +19,9 @@ import { RiderService } from '../services/rider.service';
 export class RiderProfileComponent implements OnInit {
   racerProfile: RacerProfile;
   cleanProfile: RacerProfile;
+  racerFavs: TrackDto[];
   racerResults: Event[];
+  trackWeather: TrackWeather;
   isUserProfile: boolean;
   racerTotalRaces: number = 0;
   racerTotalPodiums: number = 0;
@@ -39,11 +43,15 @@ export class RiderProfileComponent implements OnInit {
     'Date',
     'Overall',
   ];
+
   public dataSource: MatTableDataSource<Event> = new MatTableDataSource<Event>(
     []
   );
 
-  constructor(private riderService: RiderService) {}
+  constructor(
+    private riderService: RiderService,
+    private trackService: TracksCodegenService
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -66,6 +74,7 @@ export class RiderProfileComponent implements OnInit {
     } else {
       this.getRacerResults();
     }
+    this.getFavoriteTracks();
   }
 
   isRacer(): boolean {
@@ -74,6 +83,29 @@ export class RiderProfileComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  getFavoriteTracks(): void {
+    const userId = localStorage.getItem('userId');
+    this.trackService
+      .apiTracksGetUserFavoriteTracksGet(parseInt(userId!))
+      .subscribe((tracks: TrackDto[]): void => {
+        this.racerFavs = tracks;
+      });
+  }
+
+  public getTrackWeather(track: TrackDto) {
+    this.riderService
+      .getTrackWeather(Number(track.latitude), Number(track.longitude))
+      .subscribe((weather) => {
+        this.trackWeather = {
+          city: weather.location.name,
+          state: weather.location.region,
+          temp: weather.current.temp_f,
+          condition: weather.current.condition.text,
+          img: weather.current.condition.icon,
+        };
+      });
   }
 
   public toggleRaceHistory(): void {
