@@ -38,6 +38,15 @@
             </p>
             <div class="button">
               <button
+                type="button"
+                mat-raised-button
+                color="accent"
+                class="sign-up-btn"
+                (click)="login()"
+              >
+                Back to Login
+              </button>
+              <button
                 type="submit"
                 mat-raised-button
                 color="primary"
@@ -45,9 +54,6 @@
               >
                 Sign Up!
               </button>
-            </div>
-            <div class="sso">
-              <a href="#" class="fa fa-google"></a>
             </div>
           </form>
         </mat-card-content>

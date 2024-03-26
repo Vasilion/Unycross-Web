@@ -29,21 +29,21 @@
             </p>
             <div class="button">
               <button
-                type="submit"
-                mat-raised-button
-                color="primary"
-                [disabled]="!form.valid"
-              >
-                Lets Ride!
-              </button>
-              <button
                 type="button"
                 mat-raised-button
                 color="accent"
-                class="sign-up-btn"
                 (click)="signup()"
               >
                 Sign Up!
+              </button>
+              <button
+                type="submit"
+                mat-raised-button
+                color="primary"
+                class="sign-in-btn"
+                [disabled]="!form.valid"
+              >
+                Lets Ride!
               </button>
             </div>
           </form>
