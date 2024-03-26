@@ -48,7 +48,7 @@ namespace Unycross_Web.Controllers
         }
 
         [Route("RemoveUserFavoriteTrack")]
-        [HttpPost]
+        [HttpDelete]
         public FavoriteTrackDto RemoveFromUserFavoriteTracks(FavoriteTrackDto track)
         {
             return _trackService.RemoveFromUserFavoriteTracks(track);

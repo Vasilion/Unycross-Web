@@ -42,13 +42,14 @@
       </p>
     </div>
     <mat-divider></mat-divider>
-    <div class="tracks-list">
+    <div class="tracks-list" *ngIf="isUserProfile">
       <p>
         <mat-label><h1>Favorite Tracks</h1></mat-label>
       </p>
       <div>
         <mat-accordion>
           <mat-expansion-panel
+            class="track-panel"
             *ngFor="let track of racerFavs"
             (click)="getTrackWeather(track)"
           >
@@ -133,7 +134,11 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-row
+          class="t-row"
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
       </table>
     </div>
 

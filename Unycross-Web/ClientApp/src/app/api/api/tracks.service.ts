@@ -349,10 +349,10 @@ export class TracksCodegenService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiTracksRemoveUserFavoriteTrackPost(favoriteTrackDto?: FavoriteTrackDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<FavoriteTrackDto>;
-    public apiTracksRemoveUserFavoriteTrackPost(favoriteTrackDto?: FavoriteTrackDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<FavoriteTrackDto>>;
-    public apiTracksRemoveUserFavoriteTrackPost(favoriteTrackDto?: FavoriteTrackDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<FavoriteTrackDto>>;
-    public apiTracksRemoveUserFavoriteTrackPost(favoriteTrackDto?: FavoriteTrackDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
+    public apiTracksRemoveUserFavoriteTrackDelete(favoriteTrackDto?: FavoriteTrackDto, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<FavoriteTrackDto>;
+    public apiTracksRemoveUserFavoriteTrackDelete(favoriteTrackDto?: FavoriteTrackDto, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpResponse<FavoriteTrackDto>>;
+    public apiTracksRemoveUserFavoriteTrackDelete(favoriteTrackDto?: FavoriteTrackDto, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<HttpEvent<FavoriteTrackDto>>;
+    public apiTracksRemoveUserFavoriteTrackDelete(favoriteTrackDto?: FavoriteTrackDto, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -399,7 +399,7 @@ export class TracksCodegenService {
         }
 
         let localVarPath = `/api/Tracks/RemoveUserFavoriteTrack`;
-        return this.httpClient.request<FavoriteTrackDto>('post', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<FavoriteTrackDto>('delete', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 body: favoriteTrackDto,

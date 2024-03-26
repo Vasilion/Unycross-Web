@@ -17,8 +17,11 @@
 
 .race-list{
     margin-left: 10px;
-    width: 40vw;
+    width: 100%;
+    max-height: 40vh;
+    overflow-y: auto;
     text-align: center;
+    border-radius: 5px;
 }
 
 .race-history-btn{
@@ -62,8 +65,17 @@ img {
     text-align: center;
 }
 
+.t-row{
+    cursor: pointer;
+}
+
+.t-row:hover{
+    background-color: #c2185b;
+}
+
 .cell-pad{
     padding: 5px;
+    
 }
 
 .right{
@@ -111,4 +123,8 @@ img {
 
 .feed-content{
     text-align: center;
+}
+
+.track-panel{
+    margin-bottom: 5px;
 }

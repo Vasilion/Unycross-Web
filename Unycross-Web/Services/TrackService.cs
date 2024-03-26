@@ -111,6 +111,7 @@ namespace Unycross_Web.Services
             {
                 TrackDto favTrack = new TrackDto()
                 {
+                    Id = track.Track.Id,
                     Name = track.Track.Name,
                     Latitude = track.Track.Latitude,
                     Longitude = track.Track.Longitude,

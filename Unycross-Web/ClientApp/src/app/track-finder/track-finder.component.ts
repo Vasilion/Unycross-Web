@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Loader } from '@googlemaps/js-api-loader';
-import { TracksCodegenService, UserTrackFeedBackDto } from '../api';
+import { googleMapsKey } from 'src/environments/environment';
+import {
+  FavoriteTrackDto,
+  TracksCodegenService,
+  UserTrackFeedBackDto,
+} from '../api';
 import { TrackDto } from '../api/model/trackDto';
 import { Marker, TrackWeather } from '../interfaces/rider';
 import { RiderService } from '../services/rider.service';
@@ -14,6 +19,7 @@ import { RiderService } from '../services/rider.service';
 export class TrackFinderComponent implements OnInit {
   zipCodeField: FormControl = new FormControl(null, []);
   userRadius: FormControl = new FormControl(null, []);
+  userFavorites: (number | undefined)[];
   tracks: TrackDto[] = [];
   trackWeather: TrackWeather;
   trackFeedBack: UserTrackFeedBackDto[];
@@ -31,8 +37,8 @@ export class TrackFinderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getFavoriteTracks();
     this.TrackCodegenService.apiTracksGet().subscribe((tracks: TrackDto[]) => {
-      // console.log(tracks);
       tracks.forEach((track) => {
         let newTrack: TrackDto = {
           id: track.id,
@@ -46,6 +52,43 @@ export class TrackFinderComponent implements OnInit {
         this.tracks.push(newTrack);
       });
       this.initGoogleMap(37.0902, -95.7129, 5);
+    });
+  }
+
+  getFavoriteTracks(): void {
+    const userId = localStorage.getItem('userId');
+    this.TrackCodegenService.apiTracksGetUserFavoriteTracksGet(
+      parseInt(userId!)
+    ).subscribe((tracks: TrackDto[]): void => {
+      this.userFavorites = tracks.map((t) => t.id);
+    });
+  }
+
+  addTrackToUserFavorites(trackid: number) {
+    const userId = localStorage.getItem('userId');
+    const trackDto: FavoriteTrackDto = {
+      userId: parseInt(userId!),
+      trackId: trackid,
+    };
+    this.TrackCodegenService.apiTracksAddUserFavoriteTrackPost(
+      trackDto
+    ).subscribe((res) => {
+      this.userFavorites.push(trackid);
+      console.log('track added');
+    });
+  }
+
+  removeTrackFromUserFavorites(trackid: number) {
+    const userId = localStorage.getItem('userId');
+    const trackDto: FavoriteTrackDto = {
+      userId: parseInt(userId!),
+      trackId: trackid,
+    };
+    this.TrackCodegenService.apiTracksRemoveUserFavoriteTrackDelete(
+      trackDto
+    ).subscribe((res) => {
+      this.userFavorites.splice(this.userFavorites.indexOf(trackid), 1);
+      console.log('track removed');
     });
   }
 
@@ -104,17 +147,12 @@ export class TrackFinderComponent implements OnInit {
 
   initGoogleMap(centerLat: number, centerLong: number, zoom: number): void {
     let loader = new Loader({
-      apiKey: 'AIzaSyBZivOLwRx_PuyTkHNOnTvjSFK6YDAQoHg',
+      apiKey: googleMapsKey,
     });
 
+    let infoWindow: google.maps.InfoWindow | null = null; // Define infoWindow variable
+
     loader.importLibrary('maps').then(() => {
-      let lat = 0;
-      let long = 0;
-      let contentString: string = '';
-      let infowindow = new google.maps.InfoWindow({
-        content: contentString,
-        ariaLabel: 'test',
-      });
       let map = new google.maps.Map(document.getElementById('map')!, {
         center: { lat: centerLat, lng: centerLong },
         zoom: zoom,
@@ -128,9 +166,8 @@ export class TrackFinderComponent implements OnInit {
       });
 
       this.tracks.forEach((track: TrackDto) => {
-        contentString = '<h1>' + track.name + '</h1>';
-        lat = Number(track.latitude);
-        long = Number(track.longitude);
+        let lat = Number(track.latitude);
+        let long = Number(track.longitude);
         this.raidusMarkers.push({ lat: lat, lng: long });
 
         const marker = new google.maps.Marker({
@@ -139,22 +176,21 @@ export class TrackFinderComponent implements OnInit {
           title: track.name,
         });
 
-        google.maps.event.addListener(map, 'click', (event) => {
-          if (infowindow) {
-            infowindow.close();
+        google.maps.event.addListener(marker, 'click', () => {
+          // Close previous info window if any
+          if (infoWindow) {
+            infoWindow.close();
           }
-        });
 
-        marker.addListener('click', () => {
-          infowindow.close();
+          infoWindow = new google.maps.InfoWindow();
+
+          infoWindow.setContent('<h3>Loading...</h3>');
+          infoWindow.open(map, marker);
+
           if (track.id != undefined) {
             this.getTrackFeedBack(track.id);
           }
-          contentString = '<h3>Loading...</h3>';
-          infowindow = new google.maps.InfoWindow({
-            content: contentString,
-            ariaLabel: 'test',
-          });
+
           this.riderService
             .getTrackWeather(Number(track.latitude), Number(track.longitude))
             .subscribe((weather) => {
@@ -165,8 +201,14 @@ export class TrackFinderComponent implements OnInit {
                 condition: weather.current.condition.text,
                 img: weather.current.condition.icon,
               };
-              contentString =
-                '<div style="text-align: center; width:10vw;"><h2>' +
+
+              let isFavorite = this.userFavorites.includes(track.id!);
+              let buttonText = isFavorite
+                ? 'Remove from Favorites'
+                : 'Add to Favorites';
+
+              const contentString =
+                '<div style="text-align: center; width:10vw; padding-bottom:5px;"><h2>' +
                 track.name +
                 '</h2>' +
                 '<span>' +
@@ -174,7 +216,7 @@ export class TrackFinderComponent implements OnInit {
                 ', ' +
                 this.trackWeather.state +
                 '</span>' +
-                '<p><br /><img src ="' +
+                '<p><img src ="' +
                 this.trackWeather.img +
                 '" />' +
                 '<span><br />' +
@@ -182,16 +224,41 @@ export class TrackFinderComponent implements OnInit {
                 '°</span>' +
                 '<span> ' +
                 this.trackWeather.condition +
-                '</span></p></div><br /><div><p><b>Tire Choice:</b> <i>Standard </i> - <i>Scoop</i></p></div>' +
+                '</span></p><div><p><b>Tire Choice:</b> <i>Standard </i> - <i>Scoop</i></p></div>' +
                 '<div><p><b>Rating:</b>' +
                 this.trackRating +
-                '</p></div><div><button>Add to Favorites</button></div><br /><div><button>Leave a review</button></div>';
-              infowindow.setContent(contentString);
+                '</p></div><div><button id="addToFavoritesButton">' +
+                buttonText +
+                '</button></div><br /><div><button id="reviewButton">Leave a review</button></div></div>';
+
+              infoWindow!.setContent(contentString);
+
+              // Dynamically attach click event to the "Favorites" button
+              const infoWindowContentElement = document.createElement('div');
+              infoWindowContentElement.innerHTML = contentString;
+
+              const reviewButton =
+                infoWindowContentElement.querySelector('#reviewButton');
+              reviewButton!.classList.add('infowindow-btn');
+
+              const addToFavoritesButton =
+                infoWindowContentElement.querySelector('#addToFavoritesButton');
+              addToFavoritesButton!.classList.add('infowindow-btn');
+              addToFavoritesButton!.addEventListener('click', () => {
+                if (isFavorite) {
+                  this.removeTrackFromUserFavorites(track.id!);
+                  isFavorite = false;
+                  buttonText = 'Add to Favorites';
+                } else {
+                  this.addTrackToUserFavorites(track.id!);
+                  isFavorite = true;
+                  buttonText = 'Remove from Favorites';
+                }
+                addToFavoritesButton!.textContent = buttonText;
+              });
+
+              infoWindow!.setContent(infoWindowContentElement);
             });
-          infowindow.open({
-            anchor: marker,
-            map,
-          });
         });
       });
     });

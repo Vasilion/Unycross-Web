@@ -1,30 +1,41 @@
 <div class="body-container">
-  <form class="center">
-    <mat-form-field>
-      <mat-label>Rider Lookup</mat-label>
-      <input
-        matInput
-        #riderSearch
-        id="rider-search"
-        (keyup.enter)="riderLookup(riderSearch.value)"
-      />
-    </mat-form-field>
-  </form>
-
-  <div>
-    <mat-progress-spinner *ngIf="isLoading"></mat-progress-spinner>
+  <div class="search-container">
+    <div class="form-card">
+      <mat-card>
+        <form class="center">
+          <mat-form-field>
+            <mat-label>Rider Lookup</mat-label>
+            <input
+              matInput
+              #riderSearch
+              id="rider-search"
+              (keyup.enter)="riderLookup(riderSearch.value)"
+            />
+          </mat-form-field>
+        </form>
+        <button
+          class="form-btn"
+          mat-raised-button
+          color="primary"
+          (click)="riderLookup(riderSearch.value)"
+          [disabled]="!riderSearch.value"
+        >
+          Find Racer
+        </button>
+      </mat-card>
+    </div>
   </div>
-  <div class="result-container list" *ngIf="!isLoading">
-    <ul>
-      <li *ngFor="let r of racerList">
-        <span (click)="buildRacerProfile(r.slug)">
-          {{ r.name }}
-          <br />
-          {{ r.city }}
-          <br />
-          {{ r.state }}
-        </span>
-      </li>
-    </ul>
+
+  <div *ngIf="isLoading" class="search-container">
+    <mat-spinner class="loader"></mat-spinner>
+  </div>
+  <div class="result-container" *ngIf="!isLoading">
+    <mat-card
+      class="result-card"
+      *ngFor="let r of racerList"
+      (click)="buildRacerProfile(r.slug)"
+    >
+      <span> {{ r.name }} - {{ r.city }}, {{ r.state }} </span>
+    </mat-card>
   </div>
 </div>

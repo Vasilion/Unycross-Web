@@ -56,18 +56,17 @@ export class RiderProfileComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.racerProfile = this.riderService.getLocalProfile();
-    this.isUserProfile = this.riderService.checkUserProfile();
-    if (this.isUserProfile) {
+    if (this.racerProfile) {
+      this.buildRacerProfile(this.racerProfile.slug);
+      const userSlug = localStorage.getItem('riderSlug');
+      if (userSlug && userSlug == this.racerProfile.slug) {
+        this.isUserProfile = true;
+      }
+    } else if (this.racerProfile == undefined) {
       const userSlug = localStorage.getItem('riderSlug');
       if (userSlug) {
         this.buildRacerProfile(userSlug);
-      }
-    } else if (this.racerProfile) {
-      this.buildRacerProfile(this.racerProfile.slug);
-    } else if (this.racerProfile == undefined) {
-      const slug = localStorage.getItem('riderSlug');
-      if (slug) {
-        this.buildRacerProfile(slug);
+        this.isUserProfile = true;
       } else {
         this.isRacer();
       }

@@ -10,6 +10,7 @@ export const environment = {
   strapiFeaturedImageBaseUrl: 'http://localhost:1337',
 };
 
+export const googleMapsKey = 'AIzaSyB4zMNkYb7LtuIZbo7W-UTAwTDTHsC6kos';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
